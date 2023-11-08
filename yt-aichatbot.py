@@ -1,10 +1,17 @@
 from langchain.document_loaders import YoutubeLoader
-import keys
 import json
 import boto3
+import os
 
-session = boto3.Session(aws_access_key_id=keys.aws_access_key_id,
-                        aws_secret_access_key=keys.aws_secret_access_key)
+from dotenv import load_dotenv
+
+load_dotenv()
+
+aws_access_key_id = os.environ.get("aws_access_key_id")
+aws_secret_access_key = os.environ.get("aws_secret_access_key")
+
+session = boto3.Session(aws_access_key_id=aws_access_key_id,
+                        aws_secret_access_key=aws_secret_access_key)
 boto3_bedrock = session.client(service_name='bedrock', region_name='us-east-1')
 
 url = input("Enter URL for the youtube video : ")
